@@ -1,8 +1,9 @@
 /*
 *
 * Copyright (c) 2013, Asim Kadav, asimkadav@gmail.com
+* Updated 2025 for modern Linux kernels (5.0+)
 *
-*  A very simple block filter driver
+*  A simple block filter driver
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +24,20 @@
 * SOFTWARE.
 */
 
-#ifndef _MISCDEVICE_H
-#define _MISCDEVICE_H
+#ifndef _BLOCK_FILTER_H
+#define _BLOCK_FILTER_H
 
-// Driver number
-#define MISC_MINOR      45
+#include <linux/ioctl.h>
 
+/*
+ * IOCTL commands for the block filter control interface
+ * Available via /dev/blockfilter
+ */
 
-// Fault injection op-codes
-//
-#define MISC_GET 0x101
-#define MISC_PUT 0x102
+/* Get statistics (returns number of BIOs processed) */
+#define MISC_GET _IOR('B', 0x01, unsigned long)
 
-#endif
+/* Control operation (reserved for future use) */
+#define MISC_PUT _IOW('B', 0x02, unsigned long)
+
+#endif /* _BLOCK_FILTER_H */

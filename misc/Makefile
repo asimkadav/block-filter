@@ -1,11 +1,11 @@
 ifeq ($(KSRC),)
-        KSRC := /lib/modules/$(shell uname -r)/build
+	KSRC := /lib/modules/$(shell uname -r)/build
 endif
 
 obj-m += misc.o
 
 all:
-        $(MAKE) -C$(KSRC) M=$(PWD)
+	$(MAKE) -C $(KSRC) M=$(PWD)
 
 install:
 	install -o root -g root -m 0755 misc.ko $(DESTDIR)/lib/modules/$(shell uname -r)/kernel/drivers/block/
@@ -16,4 +16,6 @@ uninstall:
 	depmod -a
 
 clean:
-	rm -rf *.o *.ko *.symvers *.mod.c .*.cmd Module.markers modules.order .tmp_versions .misc.o.d
+	rm -rf *.o *.ko *.symvers *.mod.c .*.cmd Module.markers modules.order .tmp_versions .misc.o.d *.mod
+
+.PHONY: all install uninstall clean
